@@ -11,7 +11,7 @@ url = "https://wiki.xn--rckteqa2e.com/wiki/%E3%81%A8%E3%81%8F%E3%81%9B%E3%81%84%
 #取得するhtml用charset
 charset = nil
 
-html = open(url) do |page|
+html = URI.open(url) do |page|
   #charsetを自動で読み込み、取得
   charset = page.charset
   #中身を読む
@@ -47,7 +47,7 @@ require 'csv'
 header = ['日本語','英語','フランス語','ドイツ語','イタリア語','スペイン語','韓国語','中国語(簡)','中国語(繁)']
 pokemon_names_csv = pokemon.map{|res| [ res[:jpn_name], res[:eng_name], res[:fra_name], res[:deu_name],
                                         res[:ita_name], res[:esp_name], res[:kor_name], res[:chs_name], res[:cht_name] ] }
-CSV.open('../files/csv/characteristic_names.csv', 'w') do |csv|
+CSV.open('./files/csv/ability_names.csv', 'w') do |csv|
   # ヘッダーの設定
   csv << header
   # ボディの入力
@@ -66,7 +66,7 @@ pokemon_names_json = pokemon.map{|res| { res[:jpn_name] => { eng_name: res[:eng_
 pokemon_names_json.unshift({ 'number' => { jpn_name: '日本語', eng_name: '英語', deu_name: 'ドイツ語', fra_name: 'フランス語',
   kor_name: '韓国語', chs_name: '中国語(簡)', cht_name: '中国語(繁)'}})
 
-File.open('../files/json/characteristic_names.json', 'w') do |file|
+File.open('./files/json/ability_names.json', 'w') do |file|
     arranged_str = JSON.pretty_generate(pokemon_names_json)
     file << arranged_str
 end
